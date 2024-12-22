@@ -55,7 +55,7 @@ pub async fn find(path: impl Into<PathBuf>, settings: StyleSettings) -> Result<C
 
 #[allow(unused_variables)]
 pub async fn default(settings: StyleSettings) -> Cow<'static, str> {
-    static DEFAULT_STYLE: &str = concat!(env!("OUT_DIR"), "/default.css");
+    static DEFAULT_STYLE: &str = include_str!(concat!(env!("OUT_DIR"), "/default.css"));
 
     #[cfg(feature = "Accent")]
     if settings.accent {
