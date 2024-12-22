@@ -4,7 +4,6 @@ use std::path::{PathBuf, Path};
 
 use tokio::fs::{self, File};
 use tokio::io::AsyncWriteExt;
-use tokio::process::Command;
 
 use crate::error::{CacheError, Error, StyleError};
 
@@ -143,7 +142,7 @@ async fn compile_sass(style_path: impl AsRef<std::path::Path>) -> Result<String,
 
     #[cfg(not(feature = "Sass"))]
     let compiled = {
-        let output = Command::new("sass")
+        let output = tokio::process::Command::new("sass")
             .args(["--no-source-map", "-s", "expanded", &style_path.to_string_lossy()])
             .output().await
             .map_err(|e| StyleError::SystemCompiler { e: Some(e), path: style_path.to_owned() })?;

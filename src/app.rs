@@ -17,6 +17,9 @@ pub struct App;
 pub struct Config {
     pub first: String,
     pub userstyle: Option<std::path::PathBuf>,
+
+    #[cfg(feature = "Accent")]
+    pub accent: bool,
 }
 
 pub struct WMConfig {

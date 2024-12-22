@@ -22,6 +22,11 @@ struct Args {
     #[argh(option, short = 'm', long = "margin")]
     margins: Vec<i32>,
 
+    #[cfg(feature = "Accent")]
+    /// inherit accent color from the system's settings
+    #[argh(switch, short = 'C', long = "accent")]
+    accent: bool,
+
     /// path to the userstyle
     #[argh(option, short = 'u', long = "userstyle")]
     userstyle: Option<PathBuf>,
@@ -63,6 +68,9 @@ fn main() -> Result<(), Error> {
     app.run_async::<app::App>(app::Config {
         first: args.first,
         userstyle: args.userstyle,
+
+        #[cfg(feature = "Accent")]
+        accent: args.accent,
     });
 
     Ok(())
@@ -111,11 +119,12 @@ pub async fn config_dir() -> Result<PathBuf, ConfigError> {
     Ok(dir)
 }
 
-mod xdg;
-mod app;
+mod accent;
 mod anchor;
+mod app;
+mod cal;
+mod error;
 mod label;
 mod proto;
-mod error;
 mod style;
-mod cal;
+mod xdg;

@@ -37,7 +37,7 @@ pub fn is_after_reform(year: u16) -> bool {
     debug_assert!(year  != 0);
 
     const REFORM_YEAR: u16 = 1752;
-    const REFORM_MONTH: u8 = 11;
+    const _REFORM_MONTH: u8 = 11;
 
     year > REFORM_YEAR
 }
