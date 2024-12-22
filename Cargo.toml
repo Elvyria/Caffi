@@ -1,6 +1,6 @@
 [package]
 name = "caffi"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 authors = ["Elvyria <elvyria@tutanota.com>"]
 description = "A simple calendar widget for your desktop."
 repository = "https://github.com/Elvyria/caffi"
