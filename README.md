@@ -28,7 +28,17 @@ Some features can be enabled at compile time.
 
 ## Usage
 ```
+Usage: caffi [-1 <first>] [-a <anchor...>] [-m <margin...>] [-u <userstyle>] [-v]
 
+Calendar
+
+Options:
+  -1, --first       first day of the week: (sun)day, (mon)day, (tue)sday...
+  -a, --anchor      screen anchor point: (t)op, (b)ottom, (l)eft, (r)ight
+  -m, --margin      margin distance for each anchor point
+  -u, --userstyle   path to the userstyle
+  -v, --version     print version
+  --help            display usage information
 ```
 
 ## Customization
