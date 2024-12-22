@@ -8,7 +8,6 @@ license = "MIT"
 edition = "2021"
 
 [features]
-default = ["Wayland"]
 Wayland = ["dep:gtk4-layer-shell"]
 Sass = ["dep:grass"]
 X11 = ["dep:x11rb", "dep:gdk-x11"]
