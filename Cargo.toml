@@ -1,8 +1,8 @@
 [package]
 name = "caffi"
-version = "0.0.1"
+version = "0.1.0-alpha.1"
 authors = ["Elvyria <elvyria@tutanota.com>"]
-description = ""
+description = "A simple calendar widget for your desktop."
 repository = "https://github.com/Elvyria/caffi"
 license = "MIT"
 edition = "2021"
@@ -27,7 +27,6 @@ libc = "0.2"
 relm4 = { version = "0.9", features = ["macros"], default-features = false }
 thiserror = "1.0"
 tokio = { version = "1.40", features = ["time", "macros", "fs", "io-util", "signal", "process"] }
-tokio-util = "0.7.12"
 x11rb = { version = "0.13", features = ["xinerama"], optional = true  }
 zbus = { version = "5", default-features = false, features = ["tokio"], optional = true }
 

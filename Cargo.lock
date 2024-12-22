@@ -153,7 +153,7 @@ checksum = "325918d6fe32f23b19878fe4b34794ae41fc19ddbe53b10571a4874d44ffd39b"
 
 [[package]]
 name = "caffi"
-version = "0.0.1"
+version = "0.1.0-alpha.1"
 dependencies = [
  "anyhow",
  "argh",
@@ -168,7 +168,6 @@ dependencies = [
  "relm4",
  "thiserror",
  "tokio",
- "tokio-util",
  "x11rb",
  "zbus",
 ]
@@ -1410,19 +1409,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "tokio-util"
-version = "0.7.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d7fcaa8d55a2bdd6b83ace262b016eca0d79ee02818c5c1bcdf0305114081078"
-dependencies = [
- "bytes",
- "futures-core",
- "futures-sink",
- "pin-project-lite",
- "tokio",
 ]
 
 [[package]]
