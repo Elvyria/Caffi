@@ -4,7 +4,7 @@
 
 Caffi is a simple desktop calendar that is in a very early stage of development.
 
-![Preview]()
+![Preview](https://github.com/user-attachments/assets/ede121d5-67c0-4019-beda-5c25c96d64b8)
 
 
 ## Installation
