@@ -1,0 +1,36 @@
+[package]
+name = "caffi"
+version = "0.0.1"
+authors = ["Elvyria <elvyria@tutanota.com>"]
+description = ""
+repository = "https://github.com/Elvyria/caffi"
+license = "MIT"
+edition = "2021"
+
+[features]
+default = ["Wayland"]
+Wayland = ["dep:gtk4-layer-shell"]
+Sass = ["dep:grass"]
+X11 = ["dep:x11rb", "dep:gdk-x11"]
+Accent = ["dep:zbus"]
+
+[dependencies]
+argh = "0.1"
+bitflags = "2"
+color-print = "0.3.6"
+gdk-x11 = { version = "0.9", package = "gdk4-x11", features = ["xlib"], optional = true }
+glib = "0.20"
+grass = { version = "0.13", package = "grass_compiler", optional = true }
+gtk = { version = "0.9", package = "gtk4" }
+gtk4-layer-shell = { version = "0.4", optional = true }
+libc = "0.2"
+relm4 = { version = "0.9", features = ["macros"], default-features = false }
+thiserror = "1.0"
+tokio = { version = "1.40", features = ["time", "macros", "fs", "io-util", "signal", "process"] }
+tokio-util = "0.7.12"
+x11rb = { version = "0.13", features = ["xinerama"], optional = true  }
+zbus = { version = "5", default-features = false, features = ["tokio"], optional = true }
+
+[build-dependencies]
+anyhow = "1.0"
+grass = { version = "0.13", package = "grass_compiler" }

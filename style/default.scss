@@ -1,0 +1,50 @@
+/* Please refer to GTK4 CSS specification */
+
+/* https://docs.gtk.org/gtk4/css-properties.html */
+
+* { all: unset; }
+
+:root {
+	--bg:     #161616;
+	--fg:     #DDDDDD;
+	--accent: #E8A24B;
+}
+
+.calendar {
+	background-color: var(--bg);
+	color: var(--fg);
+	padding: 30px;
+	font-size: 1.1em;
+
+	.month {
+		font-size: 1.5em;
+	}
+
+	grid {
+		min-width: 300px;
+		min-height: 300px;
+	}
+
+	.weekday {
+		font-size: 0.7em;
+	}
+
+	.day {
+		color: shade(var(--fg), 0.3);
+		transition-duration: 300ms;
+
+		&.current {
+			color: var(--fg);
+		}
+
+		&.today {
+			color: var(--accent);
+			border-radius: 100%;
+			background-color: shade(var(--bg), 1.4);
+		}
+
+		&:hover {
+			color: red;
+		}
+	}
+}
