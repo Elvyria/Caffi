@@ -67,7 +67,7 @@ jobs:
         run: |
           mkdir -p packages
           for dir in artifacts/*; do
-            tar czf "packages/${dir##*/}.tar.gz" doc/*.1 style/* LICENSE -C $dir .
+            tar czf "packages/${dir##*/}.tar.gz" style/* LICENSE -C $dir .
           done
 
       - name: Release
