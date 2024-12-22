@@ -119,6 +119,7 @@ pub async fn config_dir() -> Result<PathBuf, ConfigError> {
     Ok(dir)
 }
 
+#[cfg(feature = "Accent")]
 mod accent;
 mod anchor;
 mod app;
