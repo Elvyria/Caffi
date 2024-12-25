@@ -160,7 +160,7 @@ impl AsyncComponent for App {
                     label.add_css_class("current");
                 }
 
-                if day.unsigned_abs() == today {
+                if day == today as i8 {
                     label.add_css_class("today");
                 }
 
