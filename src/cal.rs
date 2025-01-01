@@ -10,7 +10,7 @@ pub fn filler(year: u16, month: u8, day: &str) -> impl Fn(u8, u8) -> i8 {
     let weekdays = WEEKDAYS.len() as u8;
 
     let days = days_in_month(year, month);
-    let padding = (weekdays - first_day(day) - day_of_week(year, month, 1)) % weekdays;
+    let padding = (weekdays - first_day(day) + day_of_week(year, month, 1)) % weekdays;
 
     let days_prev = match month == 1 {
         false => days_in_month(year, month - 1),
