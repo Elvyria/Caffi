@@ -128,7 +128,7 @@ impl AsyncComponent for App {
             CommandMessage::Quit
         });
 
-        let model = App {};
+        let model = App;
 
         let widgets = view_output!();
 
@@ -139,18 +139,18 @@ impl AsyncComponent for App {
             widgets.grid.attach(&label, i as i32, 0, 1, 1);
         }
 
-        const ROWS: i32 = 6;
-        const COLUMNS: i32 = cal::WEEKDAYS.len() as i32;
-
         let (year, month, today) = cal::date();
 
         widgets.month.set_label(&cal::monthname(month));
 
-        let day_at = cal::filler(year, month, &config.first);
+        let day_for = cal::day_for(year, month, &config.first);
+
+        const ROWS: i32 = 6;
+        const COLUMNS: i32 = cal::WEEKDAYS.len() as i32;
 
         for column in 0..COLUMNS {
             for row in 0..ROWS {
-                let day = day_at(column as _, row as _);
+                let day = day_for(column as _, row as _);
                 let s = format!("{}", day.unsigned_abs());
 
                 let label = gtk::Label::new(Some(&s));

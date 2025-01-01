@@ -3,7 +3,7 @@ use std::ffi::CStr;
 pub const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"];
 pub const WEEKDAYS: [&str; 7] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-pub fn filler(year: u16, month: u8, day: &str) -> impl Fn(u8, u8) -> i8 {
+pub fn day_for(year: u16, month: u8, day: &str) -> impl Fn(u8, u8) -> i8 {
     debug_assert!(year  != 0);
     debug_assert!(month != 0);
 
@@ -20,15 +20,15 @@ pub fn filler(year: u16, month: u8, day: &str) -> impl Fn(u8, u8) -> i8 {
     move |column: u8, row: u8| {
         debug_assert!(column < weekdays);
 
-        if (row <= (padding / weekdays)) && (column < padding) {
+        if (row <= padding / weekdays) && (column < padding) {
             return -((1 + days_prev + column - padding) as i8)
         }
 
-        if ((row * weekdays) + column) >= days + padding {
+        if row * weekdays + column >= days + padding {
             return -((1 + row * weekdays + column - padding - days) as i8)
         }
 
-        (1 + (row * weekdays) + column - padding) as i8
+        (1 + row * weekdays + column - padding) as i8
     }
 }
 
@@ -72,11 +72,9 @@ pub fn day_of_week(mut year: u16, month: u8, day: u8) -> u8 {
 
     const OFFSETS: [u8; 12] = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
 
-    if month < 3 {
-        year -= 1;
-    }
+    year -= (month < 3) as u16;
 
-    ((year + year / 4 - year / 100 + year / 400 + (OFFSETS[month as usize - 1] + day) as u16) % 7) as u8
+    ((year + year / 4 - year / 100 + year / 400 + (OFFSETS[month as usize - 1] + day) as u16) % WEEKDAYS.len() as u16) as u8
 }
 
 #[inline]
@@ -135,4 +133,3 @@ pub fn date() -> (u16, u8, u8) {
         }
     }
 }
-
