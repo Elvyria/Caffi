@@ -3,7 +3,23 @@ use std::ffi::CStr;
 pub const MONTHS: [&str; 12] = ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"];
 pub const WEEKDAYS: [&str; 7] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-pub fn day_for(year: u16, month: u8, day: &str) -> impl Fn(u8, u8) -> i8 {
+pub enum CalendarDay {
+    Previous(u8),
+    Current(u8),
+    Next(u8),
+}
+
+impl From<CalendarDay> for u8 {
+    fn from(day: CalendarDay) -> Self {
+        match day {
+            CalendarDay::Previous(day) => day,
+            CalendarDay::Current(day) => day,
+            CalendarDay::Next(day) => day,
+        }
+    }
+}
+
+pub fn day_for(year: u16, month: u8, day: &str) -> impl Fn(u8, u8) -> CalendarDay {
     debug_assert!(year  != 0);
     debug_assert!(month != 0);
 
@@ -21,14 +37,14 @@ pub fn day_for(year: u16, month: u8, day: &str) -> impl Fn(u8, u8) -> i8 {
         debug_assert!(column < weekdays);
 
         if (row <= padding / weekdays) && (column < padding) {
-            return -((1 + days_prev + column - padding) as i8)
+            return CalendarDay::Previous(1 + days_prev + column - padding)
         }
 
         if row * weekdays + column >= days + padding {
-            return -((1 + row * weekdays + column - padding - days) as i8)
+            return CalendarDay::Next(1 + row * weekdays + column - padding - days)
         }
 
-        (1 + row * weekdays + column - padding) as i8
+        CalendarDay::Current(1 + row * weekdays + column - padding)
     }
 }
 
@@ -85,10 +101,10 @@ pub fn first_day(day: &str) -> u8 {
 }
 
 pub fn weekdays_with_first(day: &str) -> [String; WEEKDAYS.len()] {
-    let mut a = [const { String::new() }; WEEKDAYS.len()];
-    a.iter_mut().enumerate().for_each(|(i, s)| *s = weekday(i as u8));
-    a.rotate_left(first_day(day) as usize);
-    a
+    let mut weekdays = [const { String::new() }; WEEKDAYS.len()];
+    weekdays.iter_mut().enumerate().for_each(|(i, s)| *s = weekday(i as u8));
+    weekdays.rotate_left(first_day(day) as usize);
+    weekdays
 }
 
 fn weekday(day: u8) -> String {
@@ -110,26 +126,26 @@ pub fn monthname(month: u8) -> String {
     const __ALTMON_1: libc::c_int = 131183;
 
     let s = unsafe {
-        let ptr = libc::nl_langinfo(__ALTMON_1 - 1 + month as i32);
+        let ptr = libc::nl_langinfo(__ALTMON_1 + (month - 1) as i32);
         CStr::from_ptr(ptr)
     };
 
     s.to_owned().into_string().unwrap()
 }
 
-pub fn date() -> (u16, u8, u8) {
-    const LIBC_YEAR_FROM: u16 = 1900;
+// pub fn date() -> (u16, u8, u8) {
+    // const LIBC_YEAR_FROM: u16 = 1900;
 
-    unsafe {
-        let time = libc::time(std::ptr::null_mut());
-        let ptr = libc::localtime(&time as _);
+    // unsafe {
+        // let time = libc::time(std::ptr::null_mut());
+        // let ptr = libc::localtime(&time as _);
 
-        match ptr.is_null() {
-            false => {
-                let tm = *ptr;
-                (LIBC_YEAR_FROM + tm.tm_year as u16, 1 + tm.tm_mon as u8, tm.tm_mday as u8)
-            }
-            true => (0, 0, 0)
-        }
-    }
-}
+        // match ptr.is_null() {
+            // false => {
+                // let tm = *ptr;
+                // (LIBC_YEAR_FROM + tm.tm_year as u16, 1 + tm.tm_mon as u8, tm.tm_mday as u8)
+            // }
+            // true => (0, 0, 0)
+        // }
+    // }
+// }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+	<gresource prefix="icons/24x24/actions/">
+		<file preprocess="xml-stripblanks" alias="left-symbolic.svg">icons/left.svg</file>
+		<file preprocess="xml-stripblanks" alias="right-symbolic.svg">icons/right.svg</file>
+	</gresource>
+</gresources>

@@ -13,7 +13,7 @@ impl App where Self: AsyncComponent {
 
         window.init_layer_shell();
         window.set_layer(Layer::Top);
-        window.set_namespace("calendar");
+        window.set_namespace(Some("calendar"));
 
         if focusable {
             window.set_keyboard_mode(KeyboardMode::OnDemand);

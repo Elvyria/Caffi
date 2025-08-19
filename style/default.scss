@@ -13,28 +13,62 @@
 .calendar {
 	background-color: var(--bg);
 	color: var(--fg);
-	padding: 30px;
+	padding: 26px;
 	font-size: 1.1em;
+	border-radius: 10px;
+
+	.icon {
+		-gtk-icon-size: 20px;
+		margin: 10px;
+
+		transition: transform 200ms, color 200ms;
+		color: var(--fg);
+		transform: scale(1.0);
+	}
+
+	.icon:hover {
+		color: var(--accent);
+	}
+
+	.icon.pressed {
+		transition: transform 100ms, color 100ms;
+		color: shade(var(--accent), 0.6);
+		transform: scale(0.5);
+	}
 
 	.month {
-		font-size: 1.5em;
+		font-size: 1.2em;
+	}
+
+	.year {
+		font-size: 0.8em;
 	}
 
 	grid {
-		min-width: 300px;
-		min-height: 300px;
+		padding-top: 15px;
+		min-width: 260px;
+		min-height: 220px;
 	}
 
 	.weekday {
-		font-size: 0.7em;
+		font-size: 0.8em;
 	}
 
 	.day {
 		color: shade(var(--fg), 0.3);
 		transition-duration: 300ms;
+		font-size: 0.6em;
 
 		&.current {
 			color: var(--fg);
+		}
+
+		&.current.weekend {
+			color: var(--accent);
+		}
+
+		&.weekend {
+			color: shade(var(--accent), 0.3);
 		}
 
 		&.today {
@@ -43,8 +77,27 @@
 			background-color: shade(var(--bg), 1.4);
 		}
 
+		&.invisible {
+			opacity: 0.05;
+		}
+
+		&.visible {
+			animation: day-animation 500ms ease;
+		}
+
 		&:hover {
 			color: red;
 		}
+	}
+}
+
+@keyframes day-animation {
+	from { 
+		transform: translate(-5px, 0px);
+		color: var(--accent)
+	}
+	to   {
+		transform: translateX(0);
+		opacity: 1;
 	}
 }

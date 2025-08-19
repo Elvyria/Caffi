@@ -5,6 +5,7 @@ use std::process::Command;
 use anyhow::Result;
 
 fn main() {
+    compile_resources();
     compile_style().unwrap();
     git_hash().unwrap();
 }
@@ -24,6 +25,14 @@ fn git_hash() -> Result<()> {
     println!("cargo:rustc-env=GIT_COMMIT={output}");
 
     Ok(())
+}
+
+fn compile_resources() {
+    glib_build_tools::compile_resources(
+        &["data"],
+        "data/icons.gresource.xml",
+        "icons.gresource",
+    )
 }
 
 fn compile_style() -> Result<()> {
