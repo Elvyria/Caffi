@@ -140,20 +140,17 @@ impl Default for MonthGrid {
         grid.set_column_homogeneous(true);
         grid.set_row_homogeneous(true);
         grid.connect_translate_notify(|grid| grid.queue_draw());
+
+        // TODO: Shader
         grid.connect_realize(|grid| {
-            grid.add_tick_callback(|grid, _| {
+            let child = std::cell::Cell::new(grid.first_child());
+
+            grid.add_tick_callback(move |grid, _| {
                 const CLASS: &str = "visible";
-                let mut next = grid.first_child();
 
-                while let Some(ref child) = next {
-                    if child.has_css_class(CLASS) {
-                        next = child.next_sibling();
-                        continue;
-                    }
-
-                    child.remove_css_class("invisible");
-                    child.add_css_class(CLASS);
-                    break
+                if let Some(next) = child.take().or(grid.first_child()) {
+                    next.add_css_class(CLASS);
+                    child.set(next.next_sibling());
                 }
 
                 glib::ControlFlow::Continue
@@ -268,7 +265,6 @@ impl MonthGrid {
 
                 let label = gtk::Label::new(None);
                 label.add_css_class("day");
-                label.add_css_class("invisible");
 
                 match day {
                     CalendarDay::Previous(_) => label.add_css_class("previous"),
