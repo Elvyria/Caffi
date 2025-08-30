@@ -1,12 +1,12 @@
 use std::borrow::Cow;
 
-use jiff::{civil::Date, Zoned};
+use jiff::{Timestamp, Zoned};
 
 pub fn today() -> Event {
     Event {
         active: true,
         class: "today".into(),
-        start: Zoned::now().date(),
+        start: Zoned::now().timestamp(),
         end: None,
         repeat: Repeat::Never,
     }
@@ -15,8 +15,8 @@ pub fn today() -> Event {
 pub struct Event {
     pub active: bool,
     pub class:  Cow<'static, str>,
-    pub start:  Date,
-    pub end:    Option<Date>,
+    pub start:  Timestamp,
+    pub end:    Option<Timestamp>,
     pub repeat: Repeat,
 }
 

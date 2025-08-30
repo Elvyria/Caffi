@@ -3,6 +3,7 @@ use gtk::graphene::Point;
 use gtk::glib::{self, Object};
 use gtk::prelude::{GridExt,WidgetExt, WidgetExtManual};
 
+use jiff::tz::TimeZone;
 use jiff::ToSpan;
 use jiff::civil::Date;
 
@@ -172,7 +173,9 @@ impl MonthGrid {
         date.year() == current.year() || date.year() == (current + 1.month()).year() || date.year() == (current - 1.month()).year()
     }
 
-    pub fn child_by_date(&self, date: Date) -> Option<gtk::Widget> {
+    pub fn child_by_date(&self, date: impl Into<Date>) -> Option<gtk::Widget> {
+        let date = date.into();
+
         let current = self.date();
 
         if !MonthGrid::shows_date(current, date) {
@@ -208,7 +211,7 @@ impl MonthGrid {
 
     pub fn set_event(&self, event: crate::event::Event) {
         // TODO: return result
-        let Some(child) = self.child_by_date(event.start) else { return };
+        let Some(child) = self.child_by_date(event.start.to_zoned(TimeZone::system())) else { return };
         let label = child.downcast::<gtk::Label>().unwrap();
         label.add_css_class(&event.class);
     }
