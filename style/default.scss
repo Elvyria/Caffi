@@ -71,10 +71,15 @@
 			color: shade(var(--accent), 0.3);
 		}
 
+		&.event {
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: contain;
+		}
+
 		&.today {
 			color: var(--accent);
-			border-radius: 100%;
-			background-color: shade(var(--bg), 1.4);
+			background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 16 16'><circle cx='8' cy='8' r='8' fill='#FFFFFF0A'/></svg>");
 		}
 
 		&.visible {

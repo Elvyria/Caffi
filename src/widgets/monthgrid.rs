@@ -213,6 +213,8 @@ impl MonthGrid {
         // TODO: return result
         let Some(child) = self.child_by_date(event.start.to_zoned(TimeZone::system())) else { return };
         let label = child.downcast::<gtk::Label>().unwrap();
+
+        label.add_css_class("event");
         label.add_css_class(&event.class);
     }
 
